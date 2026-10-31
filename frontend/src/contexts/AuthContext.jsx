@@ -43,12 +43,12 @@ export function AuthProvider({ children }) {
   }, [fetchProfile])
 
   // ── Auth actions ──────────────────────────────────────────────
-  const register = async ({ email, password, fullName, role = 'requester' }) => {
+  const register = async ({ email, password, fullName, phone = '', role = 'requester' }) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { full_name: fullName, role },
+        data: { full_name: fullName, phone, role },
       },
     })
     if (error) throw error

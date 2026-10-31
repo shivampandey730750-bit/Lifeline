@@ -6,11 +6,12 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Card from '@/components/ui/Card';
-import { Activity, Mail, Lock, User } from 'lucide-react';
+import { Activity, Mail, Lock, User, Phone } from 'lucide-react';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('donor');
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function RegisterPage() {
     }
     setLoading(true);
     try {
-      const result = await register({ email, password, fullName: name, role });
+      const result = await register({ email, password, fullName: name, phone, role });
       
       // If Supabase confirms immediately without email confirmation
       if (result?.session) {
@@ -76,6 +77,15 @@ export default function RegisterPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
             startIcon={<Mail className="w-4 h-4 text-slate-400" />}
+          />
+          <Input
+            label="Phone Number"
+            type="tel"
+            placeholder="+91 98765 43210 (Kept private & secure)"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+            startIcon={<Phone className="w-4 h-4 text-slate-400" />}
           />
           <Input
             label="Password"
