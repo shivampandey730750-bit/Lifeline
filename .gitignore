@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+.venv
+__pycache__
+*.pyc
+
+# Local Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist
+build
+.vercel
+
+# Editor & System files
+.DS_Store
+Thumbs.db
+.vscode
+.idea

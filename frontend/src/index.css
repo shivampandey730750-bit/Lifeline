@@ -1,0 +1,418 @@
+/* ═══════════════════════════════════════════════════════════════
+   Lifeline Design System — Global Styles
+   Every Second Matters. Every Life Counts.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties (Design Tokens) ──────────────────── */
+:root {
+  /* Brand colors */
+  --color-primary:        #B91C3C;
+  --color-primary-dark:   #7F1226;
+  --color-primary-light:  #FFF1F3;
+  --color-primary-tint:   #FFE4E8;
+
+  /* Semantic */
+  --color-success:  #22C55E;
+  --color-warning:  #F59E0B;
+  --color-danger:   #EF4444;
+  --color-info:     #3B82F6;
+
+  /* Neutrals */
+  --color-surface:  #FFFFFF;
+  --color-bg:       #F8FAFC;
+  --color-border:   #E2E8F0;
+  --color-text:     #0F172A;
+  --color-muted:    #64748B;
+
+  /* Spacing (8px grid) */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+
+  /* Radius */
+  --radius-sm:   0.25rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card:      0 1px 3px 0 rgba(0,0,0,.06), 0 1px 2px -1px rgba(0,0,0,.06);
+  --shadow-card-hover: 0 8px 24px -4px rgba(0,0,0,.10), 0 2px 6px -2px rgba(0,0,0,.06);
+  --shadow-crimson:   0 4px 16px 0 rgba(185, 28, 60, 0.25);
+
+  /* Motion */
+  --duration-fast:   150ms;
+  --duration-normal: 200ms;
+  --duration-slow:   250ms;
+  --ease-standard:   cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode tokens */
+.dark {
+  --color-surface:  #1C1917;
+  --color-bg:       #0C0A09;
+  --color-border:   #292524;
+  --color-text:     #F5F5F4;
+  --color-muted:    #A8A29E;
+  --shadow-card:    0 1px 3px 0 rgba(0,0,0,.3), 0 1px 2px -1px rgba(0,0,0,.3);
+  --shadow-card-hover: 0 8px 24px -4px rgba(0,0,0,.40), 0 2px 6px -2px rgba(0,0,0,.30);
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Respect prefers-reduced-motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Focus rings (WCAG 2.2 AA) ──────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection {
+  background-color: rgba(185, 28, 60, 0.15);
+  color: var(--color-primary-dark);
+}
+
+/* ── Leaflet map override ────────────────────────────────────── */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  border-radius: var(--radius-2xl);
+}
+
+/* ── Shimmer animation ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0%,
+    rgba(255,255,255,0.5) 50%,
+    var(--color-border) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+.dark .shimmer {
+  background: linear-gradient(
+    90deg,
+    #292524 0%,
+    rgba(255,255,255,0.06) 50%,
+    #292524 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ── Glass navbar ────────────────────────────────────────────── */
+.glass-navbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dark .glass-navbar {
+  background: rgba(28, 25, 23, 0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Card styles ─────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--duration-normal) var(--ease-standard),
+              transform var(--duration-normal) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Button base ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    color            var(--duration-fast) var(--ease-standard),
+    box-shadow       var(--duration-fast) var(--ease-standard),
+    transform        var(--duration-fast) var(--ease-standard),
+    opacity          var(--duration-fast) var(--ease-standard);
+  user-select: none;
+  min-height: 44px; /* WCAG touch target */
+  white-space: nowrap;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Blood group chip ────────────────────────────────────────── */
+.blood-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-xl);
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color     var(--duration-fast) var(--ease-standard),
+    transform        var(--duration-fast) var(--ease-standard),
+    box-shadow       var(--duration-fast) var(--ease-standard);
+}
+
+.blood-chip:hover {
+  transform: scale(1.05);
+}
+
+.blood-chip.selected {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-crimson);
+  transform: scale(1.08);
+}
+
+/* ── Urgency badges ──────────────────────────────────────────── */
+.badge-critical {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+.dark .badge-critical {
+  background: rgba(153, 27, 27, 0.2);
+  color: #FCA5A5;
+  border-color: rgba(153, 27, 27, 0.4);
+}
+
+.badge-urgent {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.dark .badge-urgent {
+  background: rgba(146, 64, 14, 0.2);
+  color: #FCD34D;
+  border-color: rgba(146, 64, 14, 0.4);
+}
+
+.badge-planned {
+  background: #DBEAFE;
+  color: #1E40AF;
+  border: 1px solid #BFDBFE;
+}
+
+.dark .badge-planned {
+  background: rgba(30, 64, 175, 0.2);
+  color: #93C5FD;
+  border-color: rgba(30, 64, 175, 0.4);
+}
+
+/* ── Status timeline ─────────────────────────────────────────── */
+.timeline-step {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+
+.timeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 1.125rem;
+  top: 2.5rem;
+  width: 2px;
+  height: calc(100% - 1rem);
+  background: var(--color-border);
+}
+
+.timeline-dot {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* ── Toast container ─────────────────────────────────────────── */
+#toast-portal {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 24rem;
+}
+
+/* ── Disclaimer banner ───────────────────────────────────────── */
+.medical-disclaimer {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
+  border: 1px solid #FED7AA;
+  border-left: 4px solid #F59E0B;
+  border-radius: var(--radius-lg);
+  padding: 0.75rem 1rem;
+}
+
+.dark .medical-disclaimer {
+  background: rgba(146, 64, 14, 0.10);
+  border-color: rgba(146, 64, 14, 0.3);
+}
+
+/* ── Demo mode banner ────────────────────────────────────────── */
+.demo-mode-banner {
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
+  border: 1px solid #BFDBFE;
+  border-left: 4px solid #3B82F6;
+  border-radius: var(--radius-lg);
+  padding: 0.75rem 1rem;
+}
+
+/* ── Bento grid ──────────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Emergency button ────────────────────────────────────────── */
+.emergency-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #B91C3C 0%, #7F1226 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(185, 28, 60, 0.4);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.emergency-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(185, 28, 60, 0.5);
+}
+
+@media (max-width: 768px) {
+  .emergency-fab {
+    bottom: 5rem; /* above bottom tab bar */
+  }
+}
+
+/* ── Accessibility: skip link ────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 var(--radius-md) 0;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  transition: top 0.1s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Print ───────────────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+}
