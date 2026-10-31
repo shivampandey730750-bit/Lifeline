@@ -20,13 +20,25 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password.length < 6) {
+      addToast('Password must be at least 6 characters long.', 'error');
+      return;
+    }
     setLoading(true);
     try {
-      await register({ email, password, fullName: name, role });
-      addToast('Registration successful! Please check your email or sign in.', 'success');
-      navigate('/login');
+      const result = await register({ email, password, fullName: name, role });
+      
+      // If Supabase confirms immediately without email confirmation
+      if (result?.session) {
+        addToast('Registration successful! Redirecting to your dashboard...', 'success');
+        navigate(`/dashboard/${role || 'donor'}`);
+      } else {
+        addToast('Registration successful! If confirmation is enabled, please verify your email before signing in.', 'success');
+        navigate('/login');
+      }
     } catch (err) {
-      addToast(err.message || 'Registration failed.', 'error');
+      console.error('[Lifeline Register Error]:', err);
+      addToast(err.message || 'Registration failed. Please try again.', 'error');
     } finally {
       setLoading(false);
     }
