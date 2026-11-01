@@ -3,7 +3,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Badge from '@/components/ui/Badge';
-import { Search, MapPin, Hospital, Phone, ExternalLink, ShieldCheck, Clock } from 'lucide-react';
+import { Search, MapPin, Building2, Phone, ExternalLink, ShieldCheck, Clock } from 'lucide-react';
 
 export default function FindHospitalsPage() {
   const [searchCity, setSearchCity] = useState('');
@@ -103,7 +103,7 @@ export default function FindHospitalsPage() {
               <div className="flex justify-between items-start gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Hospital className="w-5 h-5 text-crimson-600 shrink-0" />
+                    <Building2 className="w-5 h-5 text-crimson-600 shrink-0" />
                     <h3 className="font-bold text-base text-slate-900 dark:text-white leading-tight">
                       {item.name}
                     </h3>

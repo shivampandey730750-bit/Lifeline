@@ -4,7 +4,7 @@ import EmergencySearchCard from '@/components/public/EmergencySearchCard';
 import FeatureCard from '@/components/public/FeatureCard';
 import StatsStrip from '@/components/public/StatsStrip';
 import { Link } from 'react-router-dom';
-import { Activity, MapPin, Hospital, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
+import { Activity, MapPin, Building2, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 
 // Data for feature cards
 const features = [
@@ -19,7 +19,7 @@ const features = [
     description: 'Find the closest blood banks with real‑time availability (or a disclaimer when not connected).',
   },
   {
-    icon: <Hospital className="h-6 w-6 text-primary" />, 
+    icon: <Building2 className="h-6 w-6 text-primary" />, 
     title: 'Hospital Finder',
     description: 'Search hospitals by specialty, location and emergency services.',
   },
