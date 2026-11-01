@@ -19,3 +19,13 @@ build
 Thumbs.db
 .vscode
 .idea
+
+# Unrelated local directories/files – ignore them
+anaconda3/
+anaconda_projects/
+*.pyc
+ntuser.*
+*.log
+ldrop1-1/
+ldrop1/
+lifedrop2/
