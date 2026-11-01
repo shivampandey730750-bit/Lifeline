@@ -29,17 +29,24 @@ export default function RegisterPage() {
     try {
       const result = await register({ email, password, fullName: name, phone, role });
       
-      // If Supabase confirms immediately without email confirmation
+      // If session is returned immediately (email confirmation disabled)
       if (result?.session) {
-        addToast('Registration successful! Redirecting to your dashboard...', 'success');
+        addToast('Registration successful! Welcome to Lifeline.', 'success');
         navigate(`/dashboard/${role || 'donor'}`);
       } else {
-        addToast('Registration successful! If confirmation is enabled, please verify your email before signing in.', 'success');
-        navigate('/login');
+        // If email confirmation is enabled or user was created
+        addToast('Registration successful! Please sign in with your credentials.', 'success');
+        navigate('/login', { state: { email } });
       }
     } catch (err) {
       console.error('[Lifeline Register Error]:', err);
-      addToast(err.message || 'Registration failed. Please try again.', 'error');
+      // If already registered, offer immediate redirect to login
+      if (err.message && err.message.toLowerCase().includes('already registered')) {
+        addToast('This email is already registered. Redirecting to login...', 'info');
+        setTimeout(() => navigate('/login', { state: { email } }), 1500);
+      } else {
+        addToast(err.message || 'Registration failed. Please try again.', 'error');
+      }
     } finally {
       setLoading(false);
     }

@@ -8,13 +8,13 @@ import Card from '@/components/ui/Card';
 import { Activity, Mail, Lock } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
+  const location = useLocation();
+  const [email, setEmail] = useState(location.state?.email || '');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const from = location.state?.from?.pathname || '/dashboard/donor';
 
