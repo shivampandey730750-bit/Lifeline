@@ -25,13 +25,13 @@ const STYLES = {
   info:    'bg-info-50    border-info-500    text-info-700    dark:bg-blue-950 dark:border-blue-700 dark:text-blue-300',
 }
 
-function Toast({ id, type = 'info', title, message, onDismiss }) {
+function Toast({ id, type = 'info', title, message, duration = 5000, onDismiss }) {
   const Icon = ICONS[type]
   
   useEffect(() => {
-    const timer = setTimeout(() => onDismiss(id), 5000)
+    const timer = setTimeout(() => onDismiss(id), duration)
     return () => clearTimeout(timer)
-  }, [id, onDismiss])
+  }, [id, duration, onDismiss])
 
   return (
     <motion.div
@@ -66,9 +66,12 @@ function Toast({ id, type = 'info', title, message, onDismiss }) {
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([])
 
-  const addToast = useCallback(({ type = 'info', title, message }) => {
+  const addToast = useCallback((toastOrMessage, type = 'info', duration = 5000) => {
+    const options = typeof toastOrMessage === 'string'
+      ? { type, message: toastOrMessage, duration }
+      : toastOrMessage
     const id = ++toastId
-    setToasts(prev => [...prev, { id, type, title, message }])
+    setToasts(prev => [...prev, { id, ...options }])
     return id
   }, [])
 
@@ -85,7 +88,7 @@ export function ToastProvider({ children }) {
   }
 
   return (
-    <ToastContext.Provider value={toast}>
+    <ToastContext.Provider value={{ ...toast, addToast }}>
       {children}
       {createPortal(
         <div
