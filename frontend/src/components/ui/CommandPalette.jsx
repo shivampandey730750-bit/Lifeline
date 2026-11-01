@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Home, Droplet, Hospital, UserPlus, FileText, X } from 'lucide-react';
+import { Search, Home, Droplet, Building, UserPlus, FileText, X } from 'lucide-react';
 import { useCommandPalette } from '@/contexts/CommandPaletteContext';
 
 export default function CommandPalette() {
@@ -13,7 +13,7 @@ export default function CommandPalette() {
   const commands = [
     { label: 'Home Page', icon: Home, action: () => navigate('/') },
     { label: 'Find Blood Donors', icon: Droplet, action: () => navigate('/find-blood') },
-    { label: 'Find Nearby Hospitals', icon: Hospital, action: () => navigate('/find-hospitals') },
+    { label: 'Find Nearby Hospitals', icon: Building, action: () => navigate('/find-hospitals') },
     { label: 'Register as Blood Donor', icon: UserPlus, action: () => navigate('/donate/register') },
     { label: 'Post Emergency Blood Request', icon: FileText, action: () => navigate('/requests/new') },
   ];
