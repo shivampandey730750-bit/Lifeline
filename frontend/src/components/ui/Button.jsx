@@ -26,6 +26,7 @@ const SIZES = {
 
 export default function Button({
   children,
+  as: Component = 'button',
   variant  = 'primary',
   size     = 'md',
   loading  = false,
@@ -38,11 +39,13 @@ export default function Button({
   ...props
 }) {
   const isDisabled = disabled || loading
+  const componentProps = Component === 'button'
+    ? { type, disabled: isDisabled }
+    : { 'aria-disabled': isDisabled || undefined }
 
   return (
-    <button
-      type={type}
-      disabled={isDisabled}
+    <Component
+      {...componentProps}
       className={cn(
         'btn',
         VARIANTS[variant],
@@ -64,6 +67,6 @@ export default function Button({
       {!loading && rightIcon && (
         <span className="flex-shrink-0" aria-hidden="true">{rightIcon}</span>
       )}
-    </button>
+    </Component>
   )
 }
