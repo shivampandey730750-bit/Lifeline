@@ -44,11 +44,13 @@ export function AuthProvider({ children }) {
 
   // ── Auth actions ──────────────────────────────────────────────
   const register = async ({ email, password, fullName, phone = '', role = 'requester' }) => {
+    const redirectToUrl = `${window.location.origin}/login`
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { full_name: fullName, phone, role },
+        emailRedirectTo: redirectToUrl,
       },
     })
     if (error) throw error

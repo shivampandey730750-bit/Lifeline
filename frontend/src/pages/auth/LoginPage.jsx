@@ -26,7 +26,11 @@ export default function LoginPage() {
       addToast('Welcome back! Logged in successfully.', 'success');
       navigate(from, { replace: true });
     } catch (err) {
-      addToast(err.message || 'Failed to sign in. Please check credentials.', 'error');
+      if (err.message && err.message.toLowerCase().includes('email not confirmed')) {
+        addToast('Your Gmail email is not verified yet! Please check your inbox or spam folder and click the verification link.', 'error', 7000);
+      } else {
+        addToast(err.message || 'Failed to sign in. Please check credentials.', 'error');
+      }
     } finally {
       setLoading(false);
     }
@@ -45,6 +49,12 @@ export default function LoginPage() {
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">Sign In to Lifeline</h2>
           <p className="text-sm text-slate-500 mt-1">Access emergency requests, donors, or profile</p>
         </div>
+
+        {location.state?.awaitingConfirmation && (
+          <div className="mb-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
+            ✉️ <b>Verification email sent:</b> A confirmation link has been sent to <b>{location.state?.email}</b>. Click the link in your Gmail inbox, then sign in below.
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input

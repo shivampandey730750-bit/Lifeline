@@ -29,13 +29,19 @@ export default function RegisterPage() {
     try {
       const result = await register({ email, password, fullName: name, phone, role });
       
-      // If session is returned immediately (email confirmation disabled)
-      if (result?.session) {
+      // If user signed up with email confirmation required
+      if (result?.user && !result?.session) {
+        addToast(
+          `Confirmation email sent to ${email}! Please check your Gmail inbox and click the verification link before logging in.`,
+          'success',
+          8000
+        );
+        navigate('/login', { state: { email, awaitingConfirmation: true } });
+      } else if (result?.session) {
         addToast('Registration successful! Welcome to Lifeline.', 'success');
         navigate(`/dashboard/${role || 'donor'}`);
       } else {
-        // If email confirmation is enabled or user was created
-        addToast('Registration successful! Please sign in with your credentials.', 'success');
+        addToast('Account created! Please check your Gmail inbox for confirmation.', 'success');
         navigate('/login', { state: { email } });
       }
     } catch (err) {
