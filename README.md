@@ -121,3 +121,4 @@ lifeline/
 
 Built as a major project for B.Tech Computer Science, 3rd year.  
 Demonstrates: full-stack development, REST APIs, Supabase Auth + RLS, ML model comparison, UI/UX design systems, and responsible AI practices.
+\n<!-- trigger redeploy -->
